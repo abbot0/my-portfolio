@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayush Mehta - Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <canvas id="starfield"></canvas>
+        <div class="hero-content">
+            <div class="name-container">
+                <div id="animated-name" class="animated-name">
+                    <span data-char="A">A</span>
+                    <span data-char="y">y</span>
+                    <span data-char="u">u</span>
+                    <span data-char="s">s</span>
+                    <span data-char="h">h</span>
+                    <span class="space"> </span>
+                    <span data-char="M">M</span>
+                    <span data-char="e">e</span>
+                    <span data-char="h">h</span>
+                    <span data-char="t">t</span>
+                    <span data-char="a">a</span>
+                </div>
+            </div>
+            <p class="hero-subtitle">GameDev • IoT • Creative Coding</p>
+            <div class="hero-buttons">
+                <a href="assets/Ayush_Mehta_CV.pdf" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-download"></i> Download CV
+                </a>
+                <button class="btn btn-secondary" onclick="scrollToSection('projects')">
+                    <i class="fas fa-code"></i> See Projects
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">AM</a>
+            <ul class="nav-menu">
+                <li><a href="#about" onclick="scrollToSection('about')">About</a></li>
+                <li><a href="#skills" onclick="scrollToSection('skills')">Skills</a></li>
+                <li><a href="#projects" onclick="scrollToSection('projects')">Projects</a></li>
+                <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Passionate developer with expertise in game development, IoT solutions, and creative coding. I love bringing ideas to life through innovative technology and interactive experiences.</p>
+                    <p>With a strong foundation in multiple programming languages and frameworks, I create solutions that bridge the gap between imagination and reality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Game Development</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Unreal Engine 5</span>
+                        <span class="skill-tag">Unity</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Blueprint</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Linux & DevOps</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Bash</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Nginx</span>
+                        <span class="skill-tag">Arch Linux</span>
+                        <span class="skill-tag">Ubuntu</span>
+                        <span class="skill-tag">Kali Linux</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>IoT & Hardware</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Arduino</span>
+                        <span class="skill-tag">Raspberry Pi</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">MQTT</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>AI/ML</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Computer Vision</span>
+                        <span class="skill-tag">Neural Networks</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>UI/UX Design</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Framer</span>
+                        <span class="skill-tag">Adobe XD</span>
+                        <span class="skill-tag">Prototyping</span>
+                        <span class="skill-tag">User Research</span>
+                        <span class="skill-tag">Wireframing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-controls">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ai-ml">AI/ML</button>
+                    <button class="filter-btn" data-filter="ue5">UE5</button>
+                    <button class="filter-btn" data-filter="iot">IoT</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="linux">Linux</button>
+                    <button class="filter-btn" data-filter="ui-ux">UI/UX</button>
+                </div>
+                <div class="view-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="compact-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span>Compact View</span>
+                </div>
+            </div>
+            <div class="projects-grid" id="projects-grid">
+                <!-- Project cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>mehtaayush410@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <span>github.com/abbot0</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <span>linkedin.com/in/ayush-mehta-2172b4361</span>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="scroll-top" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="app.js"></script>
+</body>
+</html>
