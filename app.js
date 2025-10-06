@@ -1,119 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ayush Mehta — Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-  <script defer src="app.js"></script>
-</head>
-<body>
-  <!-- NAV -->
-  <nav class="navbar">
-    <div class="container nav-row">
-      <a class="brand" data-scroll="#hero">AM</a>
-      <ul class="nav-links">
-        <li><a data-scroll="#about">About</a></li>
-        <li><a data-scroll="#skills">Skills</a></li>
-        <li><a data-scroll="#projects">Projects</a></li>
-      </ul>
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <span id="theme-icon">☀️</span>
-      </button>
-    </div>
-  </nav>
+// theme
+let THEME = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', THEME);
 
-  <!-- HERO -->
-  <header id="hero" class="hero">
-    <canvas id="starfield" aria-hidden="true"></canvas>
-    <div class="container hero-inner">
-      <h1 id="animated-name" class="animated-name" aria-label="Ayush Mehta">
-        <!-- final letters are in DOM so it looks fine even if JS fails -->
-        <span data-char="A">A</span><span data-char="y">y</span><span data-char="u">u</span><span data-char="s">s</span><span data-char="h">h</span>
-        <span class="space"> </span>
-        <span data-char="M">M</span><span data-char="e">e</span><span data-char="h">h</span><span data-char="t">t</span><span data-char="a">a</span>
-      </h1>
-      <p class="subtitle">GameDev • IoT • Creative Coding</p>
-      <div class="cta-row">
-        <a href="#" class="btn btn-primary">Download CV</a>
-        <a class="btn btn-ghost" data-scroll="#projects">See Projects</a>
-      </div>
-    </div>
-  </header>
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initSmoothScroll();
+  initStarfield();       // falling stars (hero only)
+  initNameAnimation();   // slot effect
+  setTimeout(runSlot, 300);
 
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <div class="container">
-      <h2>About</h2>
-      <div class="card">
-        
+  initProjects();
+  bindFilters();
+  bindCompact();
+  bindTilt();            // 3D tilt
+  bindScrollUI();
+});
 
-I’m a developer focused on game mechanics, IoT hardware, and creative coding. I love tight feel, clear UX, and clean, resilient code.
+/* ---------- theme ---------- */
+function initTheme(){
+  const btn = document.getElementById('theme-toggle');
+  const icon = document.getElementById('theme-icon');
+  const setIcon = () => icon.textContent = (THEME==='dark') ? '☀️' : '🌙';
+  setIcon();
+  btn.addEventListener('click', () => {
+    THEME = (THEME==='dark') ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', THEME);
+    localStorage.setItem('theme', THEME);
+    setIcon();
+  });
+}
 
-Stack highlights: Unreal Engine 5, C++/Blueprints, Python, Linux, JS/React, and microcontrollers.
+/* ---------- smooth scroll ---------- */
+function initSmoothScroll(){
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-scroll]');
+    if(!t) return;
+    e.preventDefault();
+    const el = document.querySelector(t.getAttribute('data-scroll'));
+    if(el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
+  });
+}
 
-      </div>
-    </div>
-  </section>
+/* ---------- starfield (hero only) ---------- */
+function initStarfield(){
+  const canvas = document.getElementById('starfield');
+  const hero = document.getElementById('hero');
+  if(!canvas || !hero) return;
+  const ctx = canvas.getContext('2d', { alpha:true });
 
-  <!-- SKILLS -->
-  <section id="skills" class="section">
-    <div class="container">
-      <h2>Skills</h2>
-      <div class="grid skills-grid">
-        <div class="card">
-          <h3>Game</h3>
-          <ul class="chips"><li>Unreal 5</li><li>Blueprint</li><li>C++</li></ul>
-        </div>
-        <div class="card">
-          <h3>Web</h3>
-          <ul class="chips"><li>React</li><li>Node</li><li>HTML/CSS</li></ul>
-        </div>
-        <div class="card">
-          <h3>Linux</h3>
-          <ul class="chips"><li>Bash</li><li>Docker</li><li>Ubuntu</li></ul>
-        </div>
-        <div class="card">
-          <h3>IoT</h3>
-          <ul class="chips"><li>ESP32</li><li>Raspberry Pi</li><li>MQTT</li></ul>
-        </div>
-        <div class="card">
-          <h3>AI/ML</h3>
-          <ul class="chips"><li>TensorFlow</li><li>PyTorch</li><li>CV</li></ul>
-        </div>
-        <div class="card">
-          <h3>Design</h3>
-          <ul class="chips"><li>Figma</li><li>Adobe XD</li><li>Wireframes</li></ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  let DPR = dpr(), W=0, H=0, stars=[];
+  function dpr(){ return Math.max(1, Math.min(2, window.devicePixelRatio || 1)); }
 
-  <!-- PROJECTS -->
-  <section id="projects" class="section">
-    <div class="container">
-      <h2>Projects</h2>
+  function resize(){
+    DPR = dpr();
+    const r = hero.getBoundingClientRect();
+    const w = Math.max(320, r.width);
+    const h = Math.max(300, r.height);
+    canvas.style.width = w+'px'; canvas.style.height = h+'px';
+    canvas.width = Math.floor(w*DPR); canvas.height = Math.floor(h*DPR);
+    W = canvas.width; H = canvas.height;
 
-      <div class="controls">
-        <div class="filters">
-          <button class="chip active" data-filter="all">All</button>
-          <button class="chip" data-filter="ue5">UE5</button>
-          <button class="chip" data-filter="web">Web</button>
-          <button class="chip" data-filter="iot">IoT</button>
-          <button class="chip" data-filter="ai-ml">AI/ML</button>
-          <button class="chip" data-filter="linux">Linux</button>
-        </div>
-        <label class="compact">
-          <input id="compact-toggle" type="checkbox" />
-          <span>Compact</span>
-        </label>
-      </div>
+    const count = Math.floor(W*H*0.00012); // scales with size
+    stars = new Array(count).fill(0).map(()=>({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*(1.6*DPR)+0.4*DPR,
+      vy: (20 + Math.random()*90) * (H/900), // speed scales with height
+      a: Math.random()*0.6 + 0.35
+    }));
+  }
 
-      <div id="projects-grid" class="grid projects-grid" aria-live="polite"></div>
-    </div>
-  </section>
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      // tail for closer layer
+      ctx.strokeStyle = (THEME==='light') ? `rgba(26,26,46,${s.a*0.25})` : `rgba(255,255,255,${s.a*0.55})`;
+      ctx.lineWidth = Math.max(1, s.r*0.5);
+      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x, s.y - 6*DPR); ctx.stroke();
 
-  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">▲</button>
-</body>
-</html>
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = (THEME==='light') ? `rgba(26,26,46,${s.a*0.35})` : `rgba(255,255,255,${s.a})`;
+      ctx.fill();
+
+      s.y += s.vy/60;
+      if(s.y > H + s.r){ s.y = -s.r; s.x = Math.random()*W; }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  new ResizeObserver(resize).observe(hero);
+  window.addEventListener('resize', resize);
+  resize(); requestAnimationFrame(draw);
+}
+
+/* ---------- name slot animation ---------- */
+function initNameAnimation(){
+  const spans = document.querySelectorAll('.animated-name span:not(.space)');
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  spans.forEach(s => s.textContent = chars[Math.floor(Math.random()*chars.length)]);
+  window._nameSpans = spans; window._slotChars = chars;
+}
+function runSlot(){
+  const spans = window._nameSpans || [];
+  const chars = window._slotChars || 'ABC';
+  spans.forEach((span,i)=>{
+    const final = span.getAttribute('data-char');
+    let count = 0, max = 9 + Math.floor(Math.random()*5);
+    const iv = setInterval(()=>{
+      span.textContent = chars[Math.floor(Math.random()*chars.length)];
+      if(++count>=max){ span.textContent = final; clearInterval(iv); }
+    }, 45 + i*2);
+  });
+}
+
+/* ---------- projects data ---------- */
+let PROJECTS = [];
+function initProjects(){
+  PROJECTS = [
+    {id:1, category:'ue5',   icon:'🪃', title:'Boomerang Loop Combat', desc:'Unreal Engine boomerang action.', tags:['Unreal','Blueprints','C++']},
+    {id:2, category:'ue5',   icon:'🪟', title:'Breakable Glass System', desc:'Glass fractures with physics.',  tags:['Unreal','Physics']},
+    {id:8, category:'ue5',   icon:'🚢', title:'Battleship Online',     desc:'Multiplayer Battleship in UE.', tags:['Unreal','Networking']},
+
+    {id:4, category:'web',   icon:'📋', title:'Tacky — Task Manager',  desc:'Boards and lists built with React.', tags:['React','HTML','CSS']},
+    {id:5, category:'web',   icon:'📚', title:'ShelfSync — Book Manager', desc:'Desktop catalog + search.', tags:['Python','Electron']},
+    {id:15,category:'web',   icon:'🛍️', title:'Shop UI Demo',          desc:'Simple product UI.', tags:['React','Design']},
+    {id:17,category:'web',   icon:'🌐', title:'3D Portfolio',           desc:'Three.js site.', tags:['Three.js','WebGL']},
+
+    {id:6, category:'iot',   icon:'📡', title:'ESP32 GPS Tracker',     desc:'Wi-Fi GPS tracker.', tags:['ESP32','IoT']},
+    {id:9, category:'iot',   icon:'🔘', title:'Wi-Fi Button',          desc:'Triggers webhooks.', tags:['ESP8266','MQTT']},
+
+    {id:10,category:'ai-ml', icon:'🌦️', title:'Weather App',           desc:'Current + forecast.', tags:['Python','API']},
+    {id:11,category:'ai-ml', icon:'🤖', title:'Local Chatbot',         desc:'Ollama models.', tags:['Python','LLM']},
+    {id:12,category:'ai-ml', icon:'🎬', title:
