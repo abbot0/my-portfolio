@@ -128,7 +128,7 @@ function initProjects(){
     {id:17,category:'web',   icon:'🌐', title:'3D Portfolio',            desc:'Three.js site.', tags:['Three.js','WebGL']},
 
     {id:6, category:'iot',   icon:'📡', title:'ESP32 GPS Tracker',      desc:'Wi-Fi GPS tracker.', tags:['ESP32','IoT']},
-    {id:9, category:'iot',   icon:'🔘', title:'Wi-Fi Button',           desc:'Triggers webhooks.', tags:['ESP8266','MQTT']},
+    {id:9, category:'iot',   icon:'🔘', title:'Wi-Fi Button',           desc:'Triggers webhooks.', tags:['ESP8266','Ardino']},
 
     {id:10,category:'ai-ml', icon:'🌦️', title:'Weather App',            desc:'Current + forecast.', tags:['Python','API']},
     {id:11,category:'ai-ml', icon:'🤖', title:'Local Chatbot',          desc:'Ollama models.', tags:['Python','LLM']},
