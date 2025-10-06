@@ -70,10 +70,10 @@ function initStarfield(){
     }));
   }
 
-  function draw(t){
+  function draw(){
     ctx.clearRect(0,0,W,H);
     for(const s of stars){
-      // tail for closer layer
+      // tail
       ctx.strokeStyle = (THEME==='light') ? `rgba(26,26,46,${s.a*0.25})` : `rgba(255,255,255,${s.a*0.55})`;
       ctx.lineWidth = Math.max(1, s.r*0.5);
       ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x, s.y - 6*DPR); ctx.stroke();
@@ -118,18 +118,86 @@ function runSlot(){
 let PROJECTS = [];
 function initProjects(){
   PROJECTS = [
-    {id:1, category:'ue5',   icon:'🪃', title:'Boomerang Loop Combat', desc:'Unreal Engine boomerang action.', tags:['Unreal','Blueprints','C++']},
+    {id:1, category:'ue5',   icon:'🪃', title:'Boomerang Loop Combat',  desc:'Unreal Engine boomerang action.', tags:['Unreal','Blueprints','C++']},
     {id:2, category:'ue5',   icon:'🪟', title:'Breakable Glass System', desc:'Glass fractures with physics.',  tags:['Unreal','Physics']},
-    {id:8, category:'ue5',   icon:'🚢', title:'Battleship Online',     desc:'Multiplayer Battleship in UE.', tags:['Unreal','Networking']},
+    {id:8, category:'ue5',   icon:'🚢', title:'Battleship Online',      desc:'Multiplayer Battleship in UE.', tags:['Unreal','Networking']},
 
-    {id:4, category:'web',   icon:'📋', title:'Tacky — Task Manager',  desc:'Boards and lists built with React.', tags:['React','HTML','CSS']},
+    {id:4, category:'web',   icon:'📋', title:'Tacky — Task Manager',   desc:'Boards and lists with React.', tags:['React','HTML','CSS']},
     {id:5, category:'web',   icon:'📚', title:'ShelfSync — Book Manager', desc:'Desktop catalog + search.', tags:['Python','Electron']},
-    {id:15,category:'web',   icon:'🛍️', title:'Shop UI Demo',          desc:'Simple product UI.', tags:['React','Design']},
-    {id:17,category:'web',   icon:'🌐', title:'3D Portfolio',           desc:'Three.js site.', tags:['Three.js','WebGL']},
+    {id:15,category:'web',   icon:'🛍️', title:'Shop UI Demo',           desc:'Simple product UI.', tags:['React','Design']},
+    {id:17,category:'web',   icon:'🌐', title:'3D Portfolio',            desc:'Three.js site.', tags:['Three.js','WebGL']},
 
-    {id:6, category:'iot',   icon:'📡', title:'ESP32 GPS Tracker',     desc:'Wi-Fi GPS tracker.', tags:['ESP32','IoT']},
-    {id:9, category:'iot',   icon:'🔘', title:'Wi-Fi Button',          desc:'Triggers webhooks.', tags:['ESP8266','MQTT']},
+    {id:6, category:'iot',   icon:'📡', title:'ESP32 GPS Tracker',      desc:'Wi-Fi GPS tracker.', tags:['ESP32','IoT']},
+    {id:9, category:'iot',   icon:'🔘', title:'Wi-Fi Button',           desc:'Triggers webhooks.', tags:['ESP8266','MQTT']},
 
-    {id:10,category:'ai-ml', icon:'🌦️', title:'Weather App',           desc:'Current + forecast.', tags:['Python','API']},
-    {id:11,category:'ai-ml', icon:'🤖', title:'Local Chatbot',         desc:'Ollama models.', tags:['Python','LLM']},
-    {id:12,category:'ai-ml', icon:'🎬', title:
+    {id:10,category:'ai-ml', icon:'🌦️', title:'Weather App',            desc:'Current + forecast.', tags:['Python','API']},
+    {id:11,category:'ai-ml', icon:'🤖', title:'Local Chatbot',          desc:'Ollama models.', tags:['Python','LLM']},
+    {id:12,category:'ai-ml', icon:'🎬', title:'Movie Genre Classifier', desc:'TF-IDF text model.', tags:['Python','NLP']},
+    {id:13,category:'ai-ml', icon:'💳', title:'Fraud Detection',        desc:'Binary classifier.', tags:['Python','sklearn']},
+    {id:14,category:'ai-ml', icon:'✉️', title:'Spam SMS',               desc:'TF-IDF NB/SVM.', tags:['Python','NLP']},
+
+    {id:7, category:'linux', icon:'💾', title:'DIY NAS',                desc:'Backups + share.', tags:['Linux','Samba']}
+  ];
+  renderProjects('all');
+}
+
+function renderProjects(filter){
+  const grid = document.getElementById('projects-grid');
+  const list = (filter==='all') ? PROJECTS : PROJECTS.filter(p=>p.category===filter);
+  grid.innerHTML = list.map(p=>`
+    <article class="card project" data-category="${p.category}" tabindex="0">
+      <div class="thumb">${p.icon}</div>
+      <div class="body">
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+        <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </article>
+  `).join('');
+  bindTilt(); // re-attach after render
+}
+
+/* ---------- filters / compact ---------- */
+function bindFilters(){
+  document.querySelectorAll('.chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProjects(btn.getAttribute('data-filter'));
+    });
+  });
+}
+function bindCompact(){
+  const t = document.getElementById('compact-toggle');
+  const grid = document.getElementById('projects-grid');
+  t.addEventListener('change', ()=> grid.classList.toggle('compact', t.checked));
+}
+
+/* ---------- 3D tilt ---------- */
+function bindTilt(){
+  document.querySelectorAll('.project').forEach(card=>{
+    const max = 10; // deg
+    function calc(e){
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      const rx = (0.5 - y) * (max*2);
+      const ry = (x - 0.5) * (max*2);
+      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+    }
+    card.addEventListener('mousemove', calc);
+    card.addEventListener('mouseleave', ()=> card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateZ(0)');
+    // focus tilt
+    card.addEventListener('focus', ()=> card.style.transform = 'perspective(900px) translateZ(10px)');
+    card.addEventListener('blur',  ()=> card.style.transform = 'perspective(900px) translateZ(0)');
+  });
+}
+
+/* ---------- scroll UI ---------- */
+function bindScrollUI(){
+  const btn = document.getElementById('scroll-top');
+  addEventListener('scroll', ()=>{
+    btn.classList.toggle('visible', window.scrollY > 320);
+  });
+  btn.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
+}
