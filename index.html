@@ -4,49 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ayush Mehta — Portfolio</title>
-
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-  <link rel="stylesheet" href="./styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
 </head>
 <body>
-  <!-- Nav -->
-  <nav class="navbar" aria-label="Main">
-    <div class="nav-inner container">
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="container nav-row">
       <a class="brand" data-scroll="#hero">AM</a>
       <ul class="nav-links">
         <li><a data-scroll="#about">About</a></li>
         <li><a data-scroll="#skills">Skills</a></li>
         <li><a data-scroll="#projects">Projects</a></li>
-        <li><a data-scroll="#contact">Contact</a></li>
       </ul>
       <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <i class="fa-solid fa-moon" aria-hidden="true"></i>
+        <span id="theme-icon">☀️</span>
       </button>
     </div>
   </nav>
 
-  <!-- HERO (starfield is limited to this section) -->
+  <!-- HERO -->
   <header id="hero" class="hero">
     <canvas id="starfield" aria-hidden="true"></canvas>
-
-    <div class="hero-inner container">
+    <div class="container hero-inner">
       <h1 id="animated-name" class="animated-name" aria-label="Ayush Mehta">
+        <!-- final letters are in DOM so it looks fine even if JS fails -->
         <span data-char="A">A</span><span data-char="y">y</span><span data-char="u">u</span><span data-char="s">s</span><span data-char="h">h</span>
-        <span class="space"></span>
+        <span class="space"> </span>
         <span data-char="M">M</span><span data-char="e">e</span><span data-char="h">h</span><span data-char="t">t</span><span data-char="a">a</span>
       </h1>
       <p class="subtitle">GameDev • IoT • Creative Coding</p>
-
       <div class="cta-row">
-        <a href="assets/Ayush_Mehta_CV.pdf" class="btn btn-primary" target="_blank" rel="noopener">
-          <i class="fa-solid fa-download"></i> Download CV
-        </a>
-        <a class="btn btn-ghost" data-scroll="#projects">
-          <i class="fa-solid fa-code"></i> See Projects
-        </a>
+        <a href="#" class="btn btn-primary">Download CV</a>
+        <a class="btn btn-ghost" data-scroll="#projects">See Projects</a>
       </div>
     </div>
   </header>
@@ -54,10 +45,14 @@
   <!-- ABOUT -->
   <section id="about" class="section">
     <div class="container">
-      <div class="section-head"><h2>About Me</h2><p class="section-kicker">I build playful, reliable software.</p></div>
-      <div class="glass about-card">
-        <p>I’m a developer focused on <strong>game mechanics</strong>, <strong>IoT hardware</strong>, and <strong>creative coding</strong>. I love tight feel, clear UX, and clean, resilient code.</p>
-        <p>Stack highlights: Unreal Engine 5, C++/Blueprints, Python, Linux, JS/React, and microcontrollers.</p>
+      <h2>About</h2>
+      <div class="card">
+        
+
+I’m a developer focused on game mechanics, IoT hardware, and creative coding. I love tight feel, clear UX, and clean, resilient code.
+
+Stack highlights: Unreal Engine 5, C++/Blueprints, Python, Linux, JS/React, and microcontrollers.
+
       </div>
     </div>
   </section>
@@ -65,15 +60,32 @@
   <!-- SKILLS -->
   <section id="skills" class="section">
     <div class="container">
-      <div class="section-head"><h2>Skills</h2><p class="section-kicker">My current toolbox.</p></div>
-
-      <div class="skills-grid">
-        <div class="skill glass"><h3><i class="fa-solid fa-gamepad"></i> Game Development</h3><div class="tags"><span>Unreal Engine 5</span><span>Blueprint</span><span>C++</span><span>Blender</span></div></div>
-        <div class="skill glass"><h3><i class="fa-solid fa-globe"></i> Web</h3><div class="tags"><span>JavaScript</span><span>React</span><span>Node.js</span><span>HTML/CSS</span></div></div>
-        <div class="skill glass"><h3><i class="fa-solid fa-server"></i> Linux & DevOps</h3><div class="tags"><span>Bash</span><span>Docker</span><span>Nginx</span><span>Arch</span><span>Ubuntu</span><span>Kali</span></div></div>
-        <div class="skill glass"><h3><i class="fa-solid fa-microchip"></i> IoT & Hardware</h3><div class="tags"><span>Arduino</span><span>Raspberry Pi</span><span>Python</span><span>MQTT</span></div></div>
-        <div class="skill glass"><h3><i class="fa-solid fa-robot"></i> AI/ML</h3><div class="tags"><span>TensorFlow</span><span>PyTorch</span><span>Computer Vision</span><span>Neural Nets</span></div></div>
-        <div class="skill glass"><h3><i class="fa-solid fa-pen-ruler"></i> UI/UX</h3><div class="tags"><span>Figma</span><span>Framer</span><span>Adobe XD</span><span>Prototyping</span><span>User Research</span></div></div>
+      <h2>Skills</h2>
+      <div class="grid skills-grid">
+        <div class="card">
+          <h3>Game</h3>
+          <ul class="chips"><li>Unreal 5</li><li>Blueprint</li><li>C++</li></ul>
+        </div>
+        <div class="card">
+          <h3>Web</h3>
+          <ul class="chips"><li>React</li><li>Node</li><li>HTML/CSS</li></ul>
+        </div>
+        <div class="card">
+          <h3>Linux</h3>
+          <ul class="chips"><li>Bash</li><li>Docker</li><li>Ubuntu</li></ul>
+        </div>
+        <div class="card">
+          <h3>IoT</h3>
+          <ul class="chips"><li>ESP32</li><li>Raspberry Pi</li><li>MQTT</li></ul>
+        </div>
+        <div class="card">
+          <h3>AI/ML</h3>
+          <ul class="chips"><li>TensorFlow</li><li>PyTorch</li><li>CV</li></ul>
+        </div>
+        <div class="card">
+          <h3>Design</h3>
+          <ul class="chips"><li>Figma</li><li>Adobe XD</li><li>Wireframes</li></ul>
+        </div>
       </div>
     </div>
   </section>
@@ -81,58 +93,27 @@
   <!-- PROJECTS -->
   <section id="projects" class="section">
     <div class="container">
-      <div class="section-head"><h2>Projects</h2><p class="section-kicker">Selected work — filter by category.</p></div>
+      <h2>Projects</h2>
 
       <div class="controls">
         <div class="filters">
           <button class="chip active" data-filter="all">All</button>
-          <button class="chip" data-filter="ai-ml">AI/ML</button>
           <button class="chip" data-filter="ue5">UE5</button>
-          <button class="chip" data-filter="iot">IoT</button>
           <button class="chip" data-filter="web">Web</button>
+          <button class="chip" data-filter="iot">IoT</button>
+          <button class="chip" data-filter="ai-ml">AI/ML</button>
           <button class="chip" data-filter="linux">Linux</button>
-          <button class="chip" data-filter="ui-ux">UI/UX</button>
         </div>
-        <label class="toggle">
+        <label class="compact">
           <input id="compact-toggle" type="checkbox" />
-          <span class="slider"></span><span class="label">Compact</span>
+          <span>Compact</span>
         </label>
       </div>
 
-      <div id="projects-grid" class="projects-grid" aria-live="polite"></div>
+      <div id="projects-grid" class="grid projects-grid" aria-live="polite"></div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="section-head"><h2>Get In Touch</h2><p class="section-kicker">Let’s build something cool.</p></div>
-
-      <div class="contact-grid">
-        <div class="contact-list glass">
-          <a class="contact-item" href="mailto:mehtaayush410@gmail.com"><i class="fa-solid fa-envelope"></i> mehtaayush410@gmail.com</a>
-          <a class="contact-item" href="https://github.com/abbot0" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> github.com/abbot0</a>
-          <a class="contact-item" href="https://linkedin.com/in/ayush-mehta-2172b4361" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> linkedin.com/in/ayush-mehta-2172b4361</a>
-        </div>
-
-        <form class="contact-form glass">
-          <div class="row">
-            <input type="text" placeholder="Your Name" autocomplete="name" required />
-            <input type="email" placeholder="Your Email" autocomplete="email" required />
-          </div>
-          <textarea rows="6" placeholder="Your Message" required></textarea>
-          <button class="btn btn-primary" type="submit">Send Message</button>
-          <p class="hint">Demo form — shows success state only.</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Scroll to top -->
-  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">
-    <i class="fa-solid fa-chevron-up"></i>
-  </button>
-
-  <script src="./app.js" defer></script>
+  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">▲</button>
 </body>
 </html>
