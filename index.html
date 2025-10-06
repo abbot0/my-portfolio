@@ -1,207 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayush Mehta - Developer Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ayush Mehta — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-    <!-- Theme Toggle -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <i class="fas fa-moon"></i>
-    </button>
+  <!-- Nav -->
+  <nav class="navbar" aria-label="Main">
+    <div class="nav-inner container">
+      <a class="brand" data-scroll="#hero">AM</a>
+      <ul class="nav-links">
+        <li><a data-scroll="#about">About</a></li>
+        <li><a data-scroll="#skills">Skills</a></li>
+        <li><a data-scroll="#projects">Projects</a></li>
+        <li><a data-scroll="#contact">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </nav>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <canvas id="starfield"></canvas>
-        <div class="hero-content">
-            <div class="name-container">
-                <div id="animated-name" class="animated-name">
-                    <span data-char="A">A</span>
-                    <span data-char="y">y</span>
-                    <span data-char="u">u</span>
-                    <span data-char="s">s</span>
-                    <span data-char="h">h</span>
-                    <span class="space"> </span>
-                    <span data-char="M">M</span>
-                    <span data-char="e">e</span>
-                    <span data-char="h">h</span>
-                    <span data-char="t">t</span>
-                    <span data-char="a">a</span>
-                </div>
-            </div>
-            <p class="hero-subtitle">GameDev • IoT • Creative Coding</p>
-            <div class="hero-buttons">
-                <a href="assets/Ayush_Mehta_CV.pdf" class="btn btn-primary" target="_blank">
-                    <i class="fas fa-download"></i> Download CV
-                </a>
-                <button class="btn btn-secondary" onclick="scrollToSection('projects')">
-                    <i class="fas fa-code"></i> See Projects
-                </button>
-            </div>
+  <!-- HERO (starfield is limited to this section) -->
+  <header id="hero" class="hero">
+    <canvas id="starfield" aria-hidden="true"></canvas>
+
+    <div class="hero-inner container">
+      <h1 id="animated-name" class="animated-name" aria-label="Ayush Mehta">
+        <span data-char="A">A</span><span data-char="y">y</span><span data-char="u">u</span>
+        <span data-char="s">s</span><span data-char="h">h</span>
+        <span class="space"></span>
+        <span data-char="M">M</span><span data-char="e">e</span><span data-char="h">h</span>
+        <span data-char="t">t</span><span data-char="a">a</span>
+      </h1>
+      <p class="subtitle">Games • IoT • Code</p>
+
+      <div class="cta-row">
+        <a href="assets/Ayush_Mehta_CV.pdf" class="btn btn-primary" target="_blank" rel="noopener">
+          <i class="fa-solid fa-download"></i> CV
+        </a>
+        <a class="btn btn-outline" data-scroll="#projects">
+          <i class="fa-solid fa-code"></i> Projects
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-head"><h2>About</h2></div>
+      <div class="card">
+        <p>I build small games, hardware projects, and web tools. I like clear interfaces and code that is easy to read.</p>
+        <p>Tools I reach for: Unreal Engine, C++, Python, Linux, and JavaScript.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-head"><h2>Skills</h2></div>
+
+      <div class="grid skills-grid">
+        <div class="card">
+          <h3>Game Development</h3>
+          <ul class="chips"><li>Unreal Engine 5</li><li>Blueprint</li><li>C++</li><li>Blender</li></ul>
         </div>
-    </section>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#hero" class="nav-logo">AM</a>
-            <ul class="nav-menu">
-                <li><a href="#about" onclick="scrollToSection('about')">About</a></li>
-                <li><a href="#skills" onclick="scrollToSection('skills')">Skills</a></li>
-                <li><a href="#projects" onclick="scrollToSection('projects')">Projects</a></li>
-                <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
-            </ul>
+        <div class="card">
+          <h3>Web</h3>
+          <ul class="chips"><li>JavaScript</li><li>React</li><li>Node.js</li><li>HTML/CSS</li></ul>
         </div>
-    </nav>
-
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Passionate developer with expertise in game development, IoT solutions, and creative coding. I love bringing ideas to life through innovative technology and interactive experiences.</p>
-                    <p>With a strong foundation in multiple programming languages and frameworks, I create solutions that bridge the gap between imagination and reality.</p>
-                </div>
-            </div>
+        <div class="card">
+          <h3>Linux & DevOps</h3>
+          <ul class="chips"><li>Bash</li><li>Docker</li><li>Nginx</li><li>Arch</li><li>Ubuntu</li><li>Kali</li></ul>
         </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-        <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Game Development</h3>
-                    <div class="skills-list">
-                        <span class="skill-tag">Unreal Engine 5</span>
-                        <span class="skill-tag">Blender</span>
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">Blueprint</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Web Development</h3>
-                    <div class="skills-list">
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Linux & DevOps</h3>
-                    <div class="skills-list">
-                        <span class="skill-tag">Bash</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Nginx</span>
-                        <span class="skill-tag">Arch Linux</span>
-                        <span class="skill-tag">Ubuntu</span>
-                        <span class="skill-tag">Kali Linux</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>IoT & Hardware</h3>
-                    <div class="skills-list">
-                        <span class="skill-tag">Arduino</span>
-                        <span class="skill-tag">Raspberry Pi</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">MQTT</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>AI/ML</h3>
-                    <div class="skills-list">
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">Computer Vision</span>
-                        <span class="skill-tag">Neural Networks</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>UI/UX Design</h3>
-                    <div class="skills-list">
-                        <span class="skill-tag">Figma</span>
-                        <span class="skill-tag">Framer</span>
-                        <span class="skill-tag">Adobe XD</span>
-                        <span class="skill-tag">Prototyping</span>
-                        <span class="skill-tag">User Research</span>
-                        <span class="skill-tag">Wireframing</span>
-                    </div>
-                </div>
-            </div>
+        <div class="card">
+          <h3>IoT & Hardware</h3>
+          <ul class="chips"><li>Arduino</li><li>Raspberry Pi</li><li>Python</li><li>MQTT</li></ul>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="projects-controls">
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="ai-ml">AI/ML</button>
-                    <button class="filter-btn" data-filter="ue5">UE5</button>
-                    <button class="filter-btn" data-filter="iot">IoT</button>
-                    <button class="filter-btn" data-filter="web">Web</button>
-                    <button class="filter-btn" data-filter="linux">Linux</button>
-                    <button class="filter-btn" data-filter="ui-ux">UI/UX</button>
-                </div>
-                <div class="view-toggle">
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="compact-toggle">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <span>Compact View</span>
-                </div>
-            </div>
-            <div class="projects-grid" id="projects-grid">
-                <!-- Project cards will be generated by JavaScript -->
-            </div>
+        <div class="card">
+          <h3>AI/ML</h3>
+          <ul class="chips"><li>TensorFlow</li><li>PyTorch</li><li>Computer Vision</li><li>Neural Nets</li></ul>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>mehtaayush410@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-github"></i>
-                        <span>github.com/abbot0</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-linkedin"></i>
-                        <span>linkedin.com/in/ayush-mehta-2172b4361</span>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form>
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email" required>
-                        <textarea placeholder="Your Message" rows="5" required></textarea>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
+        <div class="card">
+          <h3>UI/UX</h3>
+          <ul class="chips"><li>Figma</li><li>Framer</li><li>Adobe XD</li><li>Prototyping</li><li>User Research</li></ul>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Scroll to Top Button -->
-    <button id="scroll-top" class="scroll-top" onclick="scrollToTop()">
-        <i class="fas fa-chevron-up"></i>
-    </button>
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-head"><h2>Projects</h2></div>
 
-    <script src="app.js"></script>
+      <div class="controls">
+        <div class="filters">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="ai-ml">AI/ML</button>
+          <button class="chip" data-filter="ue5">UE5</button>
+          <button class="chip" data-filter="iot">IoT</button>
+          <button class="chip" data-filter="web">Web</button>
+          <button class="chip" data-filter="linux">Linux</button>
+          <button class="chip" data-filter="ui-ux">UI/UX</button>
+        </div>
+        <label class="toggle">
+          <input id="compact-toggle" type="checkbox" />
+          <span class="slider"></span><span class="label">Compact</span>
+        </label>
+      </div>
+
+      <div id="projects-grid" class="grid projects-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-head"><h2>Contact</h2></div>
+
+      <div class="contact-grid">
+        <div class="card">
+          <a class="contact-item" href="mailto:mehtaayush410@gmail.com"><i class="fa-solid fa-envelope"></i> mehtaayush410@gmail.com</a>
+          <a class="contact-item" href="https://github.com/abbot0" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> github.com/abbot0</a>
+          <a class="contact-item" href="https://linkedin.com/in/ayush-mehta-2172b4361" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> linkedin.com/in/ayush-mehta-2172b4361</a>
+        </div>
+
+        <form class="card contact-form">
+          <div class="row">
+            <input type="text" placeholder="Name" autocomplete="name" required />
+            <input type="email" placeholder="Email" autocomplete="email" required />
+          </div>
+          <textarea rows="6" placeholder="Message" required></textarea>
+          <button class="btn btn-primary" type="submit">Send</button>
+          <p class="hint">This form shows a success state only.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scroll to top -->
+  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <script src="./app.js" defer></script>
 </body>
-
 </html>
