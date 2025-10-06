@@ -1,203 +1,96 @@
-// theme
-let THEME = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', THEME);
-
-document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
-  initSmoothScroll();
-  initStarfield();       // falling stars (hero only)
-  initNameAnimation();   // slot effect
-  setTimeout(runSlot, 300);
-
-  initProjects();
-  bindFilters();
-  bindCompact();
-  bindTilt();            // 3D tilt
-  bindScrollUI();
-});
-
-/* ---------- theme ---------- */
-function initTheme(){
-  const btn = document.getElementById('theme-toggle');
-  const icon = document.getElementById('theme-icon');
-  const setIcon = () => icon.textContent = (THEME==='dark') ? '☀️' : '🌙';
-  setIcon();
-  btn.addEventListener('click', () => {
-    THEME = (THEME==='dark') ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', THEME);
-    localStorage.setItem('theme', THEME);
-    setIcon();
-  });
+:root{
+  --bg:#0b1017; --card:#131a26; --text:#e7eaf0; --muted:#9aa3b2;
+  --brand:#21d3ee; --brand2:#8b5cf6; --border:rgba(255,255,255,.08);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+[data-theme="light"]{
+  --bg:#f7f9fc; --card:#ffffff; --text:#0f172a; --muted:#5f6b7b;
+  --brand:#0284c7; --brand2:#7c3aed; --border:rgba(15,23,42,.12);
+  --shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
-/* ---------- smooth scroll ---------- */
-function initSmoothScroll(){
-  document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-scroll]');
-    if(!t) return;
-    e.preventDefault();
-    const el = document.querySelector(t.getAttribute('data-scroll'));
-    if(el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
-  });
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+
+/* Layout */
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+.section{padding:90px 0}
+h2{margin:0 0 18px;font-size:clamp(1.6rem,2.6vw,2rem)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+.muted{color:var(--muted)}
+
+/* About text */
+.about-card p{margin:0 0 1em;line-height:1.75;font-size:1.05rem;color:var(--muted)}
+
+/* Nav */
+.navbar{position:sticky;top:0;z-index:15;background:rgba(11,16,23,.75);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+[data-theme="light"] .navbar{background:rgba(255,255,255,.85)}
+.nav-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+.brand{font-weight:800;color:var(--brand);cursor:pointer;letter-spacing:.04em}
+.nav-links{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+.nav-links a{cursor:pointer;color:var(--text);text-decoration:none;font-weight:600;opacity:.9}
+.nav-links a:hover{color:var(--brand)}
+.theme-toggle{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:10px;width:42px;height:42px;display:grid;place-items:center;cursor:pointer}
+
+/* Hero */
+.hero{position:relative;min-height:88vh;display:grid;place-items:center;overflow:hidden}
+#starfield{position:absolute;inset:0;pointer-events:none}
+.hero-inner{text-align:center;position:relative;z-index:1}
+.animated-name{font-weight:800;letter-spacing:.02em;font-size:clamp(3rem,9vw,5rem)}
+.animated-name span{display:inline-block;min-width:.55em}
+.animated-name .space{width:.38em}
+.subtitle{color:var(--muted);margin:8px 0 20px}
+.cta-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{border:1px solid var(--border);border-radius:11px;padding:10px 16px;font-weight:700;cursor:pointer;text-decoration:none;color:var(--text);background:var(--card)}
+.btn-primary{border:none;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.btn-ghost{background:transparent}
+
+/* Skills */
+.skills-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:10px 0 0;padding:0}
+.chips li{padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04)}
+
+/* Projects */
+.controls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+.chip.active,.chip:hover{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none}
+.compact{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.projects-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.projects-grid.compact{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.project{padding:0;border-radius:18px;overflow:hidden;transform-style:preserve-3d;transition:transform .12s ease, box-shadow .12s ease}
+.project:hover{box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.thumb{height:170px;display:grid;place-items:center;font-size:2.2rem;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.projects-grid.compact .thumb{height:140px;font-size:1.9rem}
+.body{padding:16px}
+.body h3{margin:0 0 6px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{padding:4px 8px;border-radius:999px;border:1px solid var(--border);font-size:.82rem}
+
+/* Contact / Socials */
+.contact-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.contact-item{
+  display:flex;align-items:center;gap:12px;
+  padding:14px;border:1px solid var(--border);border-radius:12px;
+  background:var(--card);text-decoration:none;color:var(--text);
+  transition:transform .12s ease, border-color .12s ease;
+}
+.contact-item:hover{transform:translateY(-2px);border-color:var(--brand)}
+.ci{
+  width:40px;height:40px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+  font-weight:800;
 }
 
-/* ---------- starfield (hero only) ---------- */
-function initStarfield(){
-  const canvas = document.getElementById('starfield');
-  const hero = document.getElementById('hero');
-  if(!canvas || !hero) return;
-  const ctx = canvas.getContext('2d', { alpha:true });
+/* Scroll-to-top */
+.scroll-top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;cursor:pointer;opacity:0;visibility:hidden;transition:.2s}
+.scroll-top.visible{opacity:1;visibility:visible}
 
-  let DPR = dpr(), W=0, H=0, stars=[];
-  function dpr(){ return Math.max(1, Math.min(2, window.devicePixelRatio || 1)); }
-
-  function resize(){
-    DPR = dpr();
-    const r = hero.getBoundingClientRect();
-    const w = Math.max(320, r.width);
-    const h = Math.max(300, r.height);
-    canvas.style.width = w+'px'; canvas.style.height = h+'px';
-    canvas.width = Math.floor(w*DPR); canvas.height = Math.floor(h*DPR);
-    W = canvas.width; H = canvas.height;
-
-    const count = Math.floor(W*H*0.00012); // scales with size
-    stars = new Array(count).fill(0).map(()=>({
-      x: Math.random()*W,
-      y: Math.random()*H,
-      r: Math.random()*(1.6*DPR)+0.4*DPR,
-      vy: (20 + Math.random()*90) * (H/900), // speed scales with height
-      a: Math.random()*0.6 + 0.35
-    }));
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    for(const s of stars){
-      // tail
-      ctx.strokeStyle = (THEME==='light') ? `rgba(26,26,46,${s.a*0.25})` : `rgba(255,255,255,${s.a*0.55})`;
-      ctx.lineWidth = Math.max(1, s.r*0.5);
-      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x, s.y - 6*DPR); ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-      ctx.fillStyle = (THEME==='light') ? `rgba(26,26,46,${s.a*0.35})` : `rgba(255,255,255,${s.a})`;
-      ctx.fill();
-
-      s.y += s.vy/60;
-      if(s.y > H + s.r){ s.y = -s.r; s.x = Math.random()*W; }
-    }
-    requestAnimationFrame(draw);
-  }
-
-  new ResizeObserver(resize).observe(hero);
-  window.addEventListener('resize', resize);
-  resize(); requestAnimationFrame(draw);
-}
-
-/* ---------- name slot animation ---------- */
-function initNameAnimation(){
-  const spans = document.querySelectorAll('.animated-name span:not(.space)');
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  spans.forEach(s => s.textContent = chars[Math.floor(Math.random()*chars.length)]);
-  window._nameSpans = spans; window._slotChars = chars;
-}
-function runSlot(){
-  const spans = window._nameSpans || [];
-  const chars = window._slotChars || 'ABC';
-  spans.forEach((span,i)=>{
-    const final = span.getAttribute('data-char');
-    let count = 0, max = 9 + Math.floor(Math.random()*5);
-    const iv = setInterval(()=>{
-      span.textContent = chars[Math.floor(Math.random()*chars.length)];
-      if(++count>=max){ span.textContent = final; clearInterval(iv); }
-    }, 45 + i*2);
-  });
-}
-
-/* ---------- projects data ---------- */
-let PROJECTS = [];
-function initProjects(){
-  PROJECTS = [
-    {id:1, category:'ue5',   icon:'🪃', title:'Boomerang Loop Combat',  desc:'Unreal Engine boomerang action.', tags:['Unreal','Blueprints','C++']},
-    {id:2, category:'ue5',   icon:'🪟', title:'Breakable Glass System', desc:'Glass fractures with physics.',  tags:['Unreal','Physics']},
-    {id:8, category:'ue5',   icon:'🚢', title:'Battleship Online',      desc:'Multiplayer Battleship in UE.', tags:['Unreal','Networking']},
-
-    {id:4, category:'web',   icon:'📋', title:'Tacky — Task Manager',   desc:'Boards and lists with React.', tags:['React','HTML','CSS']},
-    {id:5, category:'web',   icon:'📚', title:'ShelfSync — Book Manager', desc:'Desktop catalog + search.', tags:['Python','Electron']},
-    {id:15,category:'web',   icon:'🛍️', title:'Shop UI Demo',           desc:'Simple product UI.', tags:['React','Design']},
-    {id:17,category:'web',   icon:'🌐', title:'3D Portfolio',            desc:'Three.js site.', tags:['Three.js','WebGL']},
-
-    {id:6, category:'iot',   icon:'📡', title:'ESP32 GPS Tracker',      desc:'Wi-Fi GPS tracker.', tags:['ESP32','IoT']},
-    {id:9, category:'iot',   icon:'🔘', title:'Wi-Fi Button',           desc:'Triggers webhooks.', tags:['ESP8266','MQTT']},
-
-    {id:10,category:'ai-ml', icon:'🌦️', title:'Weather App',            desc:'Current + forecast.', tags:['Python','API']},
-    {id:11,category:'ai-ml', icon:'🤖', title:'Local Chatbot',          desc:'Ollama models.', tags:['Python','LLM']},
-    {id:12,category:'ai-ml', icon:'🎬', title:'Movie Genre Classifier', desc:'TF-IDF text model.', tags:['Python','NLP']},
-    {id:13,category:'ai-ml', icon:'💳', title:'Fraud Detection',        desc:'Binary classifier.', tags:['Python','sklearn']},
-    {id:14,category:'ai-ml', icon:'✉️', title:'Spam SMS',               desc:'TF-IDF NB/SVM.', tags:['Python','NLP']},
-
-    {id:7, category:'linux', icon:'💾', title:'DIY NAS',                desc:'Backups + share.', tags:['Linux','Samba']}
-  ];
-  renderProjects('all');
-}
-
-function renderProjects(filter){
-  const grid = document.getElementById('projects-grid');
-  const list = (filter==='all') ? PROJECTS : PROJECTS.filter(p=>p.category===filter);
-  grid.innerHTML = list.map(p=>`
-    <article class="card project" data-category="${p.category}" tabindex="0">
-      <div class="thumb">${p.icon}</div>
-      <div class="body">
-        <h3>${p.title}</h3>
-        <p>${p.desc}</p>
-        <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-      </div>
-    </article>
-  `).join('');
-  bindTilt(); // re-attach after render
-}
-
-/* ---------- filters / compact ---------- */
-function bindFilters(){
-  document.querySelectorAll('.chip').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      renderProjects(btn.getAttribute('data-filter'));
-    });
-  });
-}
-function bindCompact(){
-  const t = document.getElementById('compact-toggle');
-  const grid = document.getElementById('projects-grid');
-  t.addEventListener('change', ()=> grid.classList.toggle('compact', t.checked));
-}
-
-/* ---------- 3D tilt ---------- */
-function bindTilt(){
-  document.querySelectorAll('.project').forEach(card=>{
-    const max = 10; // deg
-    function calc(e){
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width;
-      const y = (e.clientY - r.top) / r.height;
-      const rx = (0.5 - y) * (max*2);
-      const ry = (x - 0.5) * (max*2);
-      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
-    }
-    card.addEventListener('mousemove', calc);
-    card.addEventListener('mouseleave', ()=> card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateZ(0)');
-    // focus tilt
-    card.addEventListener('focus', ()=> card.style.transform = 'perspective(900px) translateZ(10px)');
-    card.addEventListener('blur',  ()=> card.style.transform = 'perspective(900px) translateZ(0)');
-  });
-}
-
-/* ---------- scroll UI ---------- */
-function bindScrollUI(){
-  const btn = document.getElementById('scroll-top');
-  addEventListener('scroll', ()=>{
-    btn.classList.toggle('visible', window.scrollY > 320);
-  });
-  btn.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
+/* Responsive */
+@media (max-width:760px){
+  .section{padding:64px 0}
+  .projects-grid{gap:12px}
+  .project .body{padding:14px}
+  .thumb{height:150px}
 }
