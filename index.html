@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ayush Mehta — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="container nav-row">
+      <a class="brand" data-scroll="#hero">AM</a>
+      <ul class="nav-links">
+        <li><a data-scroll="#about">About</a></li>
+        <li><a data-scroll="#skills">Skills</a></li>
+        <li><a data-scroll="#projects">Projects</a></li>
+        <li><a data-scroll="#contact">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <span id="theme-icon">☀️</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="hero" class="hero">
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <div class="container hero-inner">
+      <h1 id="animated-name" class="animated-name" aria-label="Ayush Mehta">
+        <span data-char="A">A</span><span data-char="y">y</span><span data-char="u">u</span><span data-char="s">s</span><span data-char="h">h</span>
+        <span class="space"> </span>
+        <span data-char="M">M</span><span data-char="e">e</span><span data-char="h">h</span><span data-char="t">t</span><span data-char="a">a</span>
+      </h1>
+      <p class="subtitle">GameDev • IoT • Creative Coding</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-primary">Download CV</a>
+        <a class="btn btn-ghost" data-scroll="#projects">See Projects</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2>About</h2>
+      <div class="card about-card">
+        <p>
+         I build playful, reliable software.
+
+I’m a developer focused on game mechanics, IoT hardware, and creative coding. I love tight feel, clear UX, and clean, resilient code.
+
+Stack highlights: Unreal Engine 5, C++/Blueprints, Python, Linux, JS/React, and microcontrollers.
+
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="grid skills-grid">
+        <div class="card">
+          <h3>Game</h3>
+          <ul class="chips"><li>Unreal 5</li><li>Blueprint</li><li>C++</li></ul>
+        </div>
+        <div class="card">
+          <h3>Web</h3>
+          <ul class="chips"><li>React</li><li>Node</li><li>HTML/CSS</li></ul>
+        </div>
+        <div class="card">
+          <h3>Linux</h3>
+          <ul class="chips"><li>Bash</li><li>Docker</li><li>Ubuntu</li></ul>
+        </div>
+        <div class="card">
+          <h3>IoT</h3>
+          <ul class="chips"><li>ESP32</li><li>Raspberry Pi</li><li>MQTT</li></ul>
+        </div>
+        <div class="card">
+          <h3>AI/ML</h3>
+          <ul class="chips"><li>TensorFlow</li><li>PyTorch</li><li>CV</li></ul>
+        </div>
+        <div class="card">
+          <h3>Design</h3>
+          <ul class="chips"><li>Figma</li><li>Adobe XD</li><li>Wireframes</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2>Projects</h2>
+
+      <div class="controls">
+        <div class="filters">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="ue5">UE5</button>
+          <button class="chip" data-filter="web">Web</button>
+          <button class="chip" data-filter="iot">IoT</button>
+          <button class="chip" data-filter="ai-ml">AI/ML</button>
+          <button class="chip" data-filter="linux">Linux</button>
+        </div>
+        <label class="compact">
+          <input id="compact-toggle" type="checkbox" />
+          <span>Compact</span>
+        </label>
+      </div>
+
+      <div id="projects-grid" class="grid projects-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT / SOCIALS -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2>Contact</h2>
+      <div class="grid contact-grid">
+        <a class="contact-item" href="mailto:mehtaayush410@gmail.com" aria-label="Email">
+          <span class="ci">✉️</span>
+          <div>
+            <strong>Email</strong>
+            <div class="muted">mehtaayush410@gmail.com</div>
+          </div>
+        </a>
+
+        <a class="contact-item" href="https://github.com/abbot0" target="_blank" rel="noopener" aria-label="GitHub">
+          <span class="ci">🐙</span>
+          <div>
+            <strong>GitHub</strong>
+            <div class="muted">github.com/abbot0</div>
+          </div>
+        </a>
+
+        <a class="contact-item" href="https://www.linkedin.com/in/ayush-mehta-2172b4361" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <span class="ci">in</span>
+          <div>
+            <strong>LinkedIn</strong>
+            <div class="muted">/in/ayush-mehta-2172b4361</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">▲</button>
+</body>
+</html>
